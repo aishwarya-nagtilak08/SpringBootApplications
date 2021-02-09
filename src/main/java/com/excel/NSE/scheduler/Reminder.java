@@ -34,6 +34,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Reminder extends TimerTask {
 
 	public void run() {
+		System.out.println("RUN called");
 		URL obj;
 		HttpURLConnection con;
 		try {

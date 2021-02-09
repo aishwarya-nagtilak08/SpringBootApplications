@@ -1,13 +1,28 @@
 package com.excel.NSE.controller;
 
 import java.io.BufferedReader;
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.Timer;
+import java.util.TimerTask;
+import java.util.stream.Collectors;
 
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -19,8 +34,10 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.excel.NSE.constants.Constants;
-
-import com.excel.NSE.scheduler.Reminder;;
+import com.excel.NSE.pojos.DetailData;
+import com.excel.NSE.pojos.NSEObject;
+import com.excel.NSE.scheduler.Reminder;
+import com.fasterxml.jackson.databind.ObjectMapper;;
 
 @RestController
 @RequestMapping(value = "/NSE")
@@ -85,9 +102,23 @@ public class NSEController {
 	@GetMapping("/createExcelNSE")
 	public void createExcelNSE() throws Exception {
 
-		Timer timer = new Timer();
-		timer.schedule(new Reminder(), 10000);
+		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = dateFormatter.parse("2021-02-08 13:05:45");
 
+		Timer timer = new Timer();
+		timer.schedule(new Reminder(), date);
+		int period = 1000;
+		timer.schedule(new Reminder(), date, period);
+
+	}
+
+	@GetMapping("/createExcelNSE_thread")
+	public void createExcelNSE_thread() throws Exception {
+		while (true) {
+			Reminder rem = new Reminder();
+			rem.run();
+			Thread.sleep(40000);
+		}
 	}
 
 }
