@@ -11,8 +11,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
-@Table(name = "attendace")
+@Table(name = "attendance")
 public class Attendance {
 
 	@Id
@@ -24,6 +27,7 @@ public class Attendance {
 
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinTable(name = "class_id")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private ClassObject classObj;
 
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)

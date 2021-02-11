@@ -32,7 +32,7 @@ public class User {
 	@OneToOne
 	private Role role;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<ClassObject> classObjs;
 
 	public Long getId() {
