@@ -3,12 +3,12 @@ package com.schoolattendance.commoncontroller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.schoolattendance.repository.DivisionRepository;
-import com.schoolattendance.service.AttendanceService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.schoolattendance.models.Role;
+import com.schoolattendance.models.User;
 import com.schoolattendance.service.AttendanceServiceImpl;
 import com.schoolattendance.service.ClassServiceImpl;
 import com.schoolattendance.service.DivisionServiceImpl;
@@ -35,7 +35,6 @@ public class MainController {
 	UserServiceImpl userService;
 
 	public String login(HttpSession session) {
-
 		String email = session.getAttribute("email").toString();
 		String password = session.getAttribute("password").toString();
 
@@ -46,4 +45,55 @@ public class MainController {
 		return "index";
 	}
 
+	public String register(JsonNode node) {
+		JsonNode userName = node.get("userName");
+		JsonNode firstName = node.get("firstName");
+		JsonNode lastName = node.get("lastName");
+		JsonNode email = node.get("email");
+		JsonNode department = node.get("department");
+		JsonNode roleId = node.get("roleId");
+
+		User user = new User();
+		user.setUserName(userName.asText());
+		user.setFirstName(firstName.asText());
+		user.setLastName(lastName.asText());
+		user.setEmail(email.asText());
+		user.setDepartment(department.asText());
+
+		Role role = roleService.findById(roleId.asLong());
+
+		user.setRole(role);
+		userService.save(user);
+
+		return "dashboard";
+	}
+
+	public String update(JsonNode node) {
+		JsonNode userName = node.get("userName");
+		JsonNode firstName = node.get("firstName");
+		JsonNode lastName = node.get("lastName");
+		JsonNode email = node.get("email");
+		JsonNode department = node.get("department");
+		JsonNode roleId = node.get("roleId");
+		JsonNode userId = node.get("userId");
+
+		User user = userService.findById(userId.asLong());
+
+		user.setUserName(userName.asText());
+		user.setFirstName(firstName.asText());
+		user.setLastName(lastName.asText());
+		user.setEmail(email.asText());
+		user.setDepartment(department.asText());
+
+		Role role = roleService.findById(roleId.asLong());
+		if (!user.getRole().equals(role)) {
+			roleService.delete(role.getId());
+		}
+		user.setRole(role);
+		
+		userService.save(user);
+		return "dashboard";
+	}
+
+	
 }

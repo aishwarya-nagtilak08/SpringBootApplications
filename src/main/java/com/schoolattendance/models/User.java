@@ -25,6 +25,7 @@ public class User {
 	private String email;
 	private String mobile;
 	private String department;
+	private Integer rollNumber;
 
 	@OneToOne
 	private Role role;
@@ -102,6 +103,14 @@ public class User {
 
 	public void setClassObjs(List<ClassObject> classObjs) {
 		this.classObjs = classObjs;
+	}
+
+	public Integer getRollNumber() {
+		return rollNumber;
+	}
+
+	public void setRollNumber(Integer rollNumber) {
+		this.rollNumber = rollNumber;
 	}
 
 }
