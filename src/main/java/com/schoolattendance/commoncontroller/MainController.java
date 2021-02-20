@@ -1,8 +1,11 @@
 package com.schoolattendance.commoncontroller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -90,10 +93,16 @@ public class MainController {
 			roleService.delete(role.getId());
 		}
 		user.setRole(role);
-		
+
 		userService.save(user);
 		return "dashboard";
 	}
 
-	
+	@RequestMapping("/")
+	public String welcome(Map<String, Object> model) {
+		String message = "timepass";
+		model.put("message", message);
+		return "welcome";
+	}
+
 }

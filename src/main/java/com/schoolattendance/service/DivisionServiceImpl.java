@@ -3,10 +3,11 @@ package com.schoolattendance.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.schoolattendance.models.Division;
 import com.schoolattendance.repository.DivisionRepository;
-
+@Service
 public class DivisionServiceImpl implements DivisionService {
 
 	@Autowired

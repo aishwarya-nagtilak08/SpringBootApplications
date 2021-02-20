@@ -3,10 +3,11 @@ package com.schoolattendance.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.schoolattendance.models.User;
 import com.schoolattendance.repository.UserRepository;
-
+@Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired

@@ -26,6 +26,7 @@ public class User {
 	private String mobile;
 	private String department;
 	private Integer rollNumber;
+	private String password;
 
 	@OneToOne
 	private Role role;
@@ -111,6 +112,14 @@ public class User {
 
 	public void setRollNumber(Integer rollNumber) {
 		this.rollNumber = rollNumber;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }
